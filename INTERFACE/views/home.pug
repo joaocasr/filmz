@@ -1,0 +1,100 @@
+extends layout
+
+block content
+    header(id="topBar")
+        div(id="wrap")
+            <a href="/">            
+                <img src="/images/filmz-logos_white.png" style="height:300px;width:300px;margin-top:-80px;margin-left:100px;"/>
+            </a>
+            <div class="searchBar" style="margin-top:30px">    
+                <a href="/search">
+                    <svg width="45px" height="45px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 11.1455C5.49956 8.21437 7.56975 5.69108 10.4445 5.11883C13.3193 4.54659 16.198 6.08477 17.32 8.79267C18.4421 11.5006 17.495 14.624 15.058 16.2528C12.621 17.8815 9.37287 17.562 7.3 15.4895C6.14763 14.3376 5.50014 12.775 5.5 11.1455Z" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                        <path d="M15.989 15.4905L19.5 19.0015" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="menu">
+                <a class="hover item active" onclick="changeActual('home')" id="home">Home</a>
+                <a onclick="changeActual('filmes')" class="hover item " id="filmes">Filmes</a>
+                <a onclick="changeActual('series')" class="hover item " id="series">Séries</a>
+            </div>
+    div(id="mainbackground")
+        div(class="background")
+        div(class="hover")
+        div(class="wrap")
+            div(class="cartaz")
+                span(class="duration") Filmes Online - Duração: 1h, 46min
+                    div(class="s" style="font-size:16px;")
+                        svg(fill="#000000" width="14px" height="14px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg")
+                            path(fill="#ffbd0d" d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z")
+                        |  6.2 /10   Filme de 2017
+                    p(class="titlecartaz" style="font:bold;") Dunkirk
+                    p(class="resumo") Em Dunkirk, na Operação Dínamo, mais conhecida como a Evacuação de Dunquerque, soldados aliados da Bélgica, do Império Britânico e da França são rodeados pelo exército alemão e devem ser resgatados durante uma feroz batalha no início da Segunda Guerra Mundial. A história acompanha três momentos distintos: uma hora de confronto no céu, onde o piloto Farrier (Tom Hardy) precisa destruir um avião inimigo, um dia inteiro em alto mar, onde o civil britânico Dawson (Mark Rylance) leva seu barco de passeio para ajudar a resgatar o exército de seu país, e uma semana na praia, onde o jovem soldado Tommy (Fionn Whitehead) busca escapar a qualquer preço. 
+                    div(class="homebuttons")
+                        button.w3-button.w3-round-xxlarge(style="background-color:#1a2a41" class="gButton")
+                            
+                            <svg style="margin-right:30px;" fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.92 24.096q0 1.088 0.928 1.728 0.512 0.288 1.088 0.288 0.448 0 0.896-0.224l16.16-8.064q0.48-0.256 0.8-0.736t0.288-1.088-0.288-1.056-0.8-0.736l-16.16-8.064q-0.448-0.224-0.896-0.224-0.544 0-1.088 0.288-0.928 0.608-0.928 1.728v16.16z" fill="white"/>
+                            </svg>
+                            <a href="/">Assistir online agora</a>
+                        button.w3-button.w3-round-xxlarge(style="background-color:#1a2a41" class="gButton")
+                            <svg style="margin-right:30px;" fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.92 24.096q0 1.088 0.928 1.728 0.512 0.288 1.088 0.288 0.448 0 0.896-0.224l16.16-8.064q0.48-0.256 0.8-0.736t0.288-1.088-0.288-1.056-0.8-0.736l-16.16-8.064q-0.448-0.224-0.896-0.224-0.544 0-1.088 0.288-0.928 0.608-0.928 1.728v16.16z" fill="white"/>
+                            </svg>
+                            <a href="/" style="margin-top:100px;">Trailer</a>
+                            
+    div(id="itemsList")
+        div(class="wrap")
+            <div class="options">
+                <span class="item active" onclick="changeSpan('upcoming')" id="upcoming">
+                <svg width="800px" height="800px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.349 8.515L12.5 5L10.651 8.515C10.5204 8.77186 10.3313 8.99449 10.099 9.165C9.86556 9.33638 9.59543 9.45107 9.31 9.5L5.5 10.247L8.16 13.428C8.52377 13.8267 8.69542 14.3643 8.63 14.9L8.124 19L11.632 17.3C11.9026 17.1689 12.1993 17.1006 12.5 17.1C12.7821 17.1009 13.0599 17.1694 13.31 17.3L16.9 18.895L16.394 14.844C16.33 14.3095 16.502 13.7736 16.865 13.376L19.5 10.247L15.69 9.5C15.4042 9.45122 15.1337 9.33652 14.9 9.165C14.6681 8.99438 14.4793 8.77175 14.349 8.515Z" stroke-width="1.0" stroke-linejoin="round" stroke-linecap="round" stroke="white"/>
+                </svg>Brevemente </span>
+                <span class="item" onclick="changeSpan('trending')" id="trending">
+                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path id="Vector" d="M20.0005 7L14.1543 12.9375C14.0493 13.0441 13.9962 13.0976 13.9492 13.1396C13.1899 13.8193 12.0416 13.8193 11.2822 13.1396C11.2352 13.0976 11.1817 13.0442 11.0767 12.9375C10.9716 12.8308 10.9191 12.7774 10.8721 12.7354C10.1127 12.0557 8.96397 12.0557 8.20461 12.7354C8.15771 12.7773 8.10532 12.8305 8.00078 12.9367L4 17M20.0005 7L20 13M20.0005 7H14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                </svg>Trending </span>
+                <span class="item" onclick="changeSpan('actors')" id="actors">
+                <svg width="800px" height="800px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="ic_fluent_movies_and_tv_24_filled" fill="#212121" fill-rule="nonzero">
+                        <path d="M19.7286477,3.87458256 L19.7796475,4.03423199 L20.3309222,5.95675538 C20.4355805,6.32174238 20.2508505,6.70115383 19.9126449,6.84979651 L19.8167039,6.88442967 L9.08979429,9.9595254 L20.2488588,9.96046231 C20.6285546,9.96046231 20.9423498,10.2426162 20.9920122,10.6086918 L20.9988588,10.7104623 L20.9988588,19.2084746 C20.9988588,20.6710064 19.8571542,21.8668789 18.4163811,21.9534558 L18.2488588,21.9584746 L5.75,21.9584746 C4.28746816,21.9584746 3.09159572,20.81677 3.00501879,19.3759969 L3,19.2084746 L2.99979429,10.8165254 L2.47803395,8.99538983 C2.07490554,7.589514 2.84275532,6.12527119 4.20385145,5.64491723 L4.36350088,5.59391744 L16.3781751,2.14876505 C17.7840509,1.74563665 19.2482937,2.51348642 19.7286477,3.87458256 Z M6.27268011,6.60691826 L4.77695691,7.03580999 C4.15481999,7.21420488 3.7786565,7.83376496 3.89085867,8.45731315 L3.91988247,8.58194642 L4.26421826,9.78278802 L4.55930489,9.69792899 L6.27268011,6.60691826 Z M11.029003,5.24306462 L8.31151617,6.02229143 L6.59814094,9.11330216 L9.31562776,8.33407535 L11.029003,5.24306462 Z M15.7862871,3.87893535 L13.0688003,4.65816215 L11.3554251,7.74917288 L14.0719506,6.97022172 L15.7862871,3.87893535 Z M17.6334765,3.64537692 L16.1127092,6.38504361 L18.6812212,5.64877896 L18.3377549,4.44768802 C18.2305941,4.07397383 17.96425,3.78902913 17.6334765,3.64537692 Z" fill="white"></path>
+                    </g>
+                </g>
+                </svg>Atores </span>
+                <span class="item" onclick="changeSpan('toprank')" id="toprank">
+                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.67 14H4C2.9 14 2 14.9 2 16V22H8.67V14Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                    <path d="M13.33 10H10.66C9.56003 10 8.66003 10.9 8.66003 12V22H15.33V12C15.33 10.9 14.44 10 13.33 10Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                    <path d="M20 17H15.33V22H22V19C22 17.9 21.1 17 20 17Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                    <path d="M12.52 2.07007L13.05 3.13006C13.12 3.28006 13.31 3.42006 13.47 3.44006L14.43 3.60007C15.04 3.70007 15.19 4.15005 14.75 4.58005L14 5.33005C13.87 5.46005 13.8 5.70006 13.84 5.87006L14.05 6.79007C14.22 7.52007 13.83 7.80007 13.19 7.42007L12.29 6.89007C12.13 6.79007 11.86 6.79007 11.7 6.89007L10.8 7.42007C10.16 7.80007 9.76998 7.52007 9.93998 6.79007L10.15 5.87006C10.19 5.70006 10.12 5.45005 9.98999 5.33005L9.24999 4.59006C8.80999 4.15006 8.94999 3.71005 9.56999 3.61005L10.53 3.45007C10.69 3.42007 10.88 3.28007 10.95 3.14007L11.48 2.08005C11.77 1.50005 12.23 1.50007 12.52 2.07007Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                </svg>Ranked </span>
+            </div>
+        div(class="itemsListmovies")
+                div(class="border owl-carousel owl-loaded owl-drag")
+                    div(class="owl-stage-outer")
+                        div(class="grid-container owl-stage" id="movies-grid-container")
+                div(class="pagbuttons")
+                    input(type="hidden" id="pagetype" value="upcoming")
+                    button.w3-button.w3-round-large(id="back" style="background-color:#1a2a41" class="gButton")
+                        <svg width="50px" height="50px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="white"/></svg>
+                    button.w3-button.w3-round-large(id="actualpage" style="background-color:#1a2a41" class="gButton" value=1) 1
+                    button.w3-button.w3-round-large(id="nullpage" style="background-color:#1a2a41" class="gButton" value=0) ...
+                    button.w3-button.w3-round-large(id="lastpage" style="background-color:#1a2a41" class="gButton" value=0)
+                    button.w3-button.w3-round-large(id="forward" style="background-color:#1a2a41" class="gButton")
+                        <svg width="50px" height="50px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="white"/></svg>
+
+    <footer class="mainfooter" role="contentinfo">
+        <div class="footer-middle">
+            <div class="wrap" style="text-align:center;">
+                <h2>PARCEIROS DO FILMZ</h2>
+                <h4>SIGA-NOS NAS REDES SOCIAIS</h4>
+                <a href="https://instagram.com/khonsupx">            
+                    <img src="/images/instagram_icon.png" style="height:52px;width:52px;margin-bottom:10px;"/>
+                </a>
+
+            </div>
+            <div class="containerfooter">© Copyright Todos os direitos reservados João Castro 2023 </div>
+        </div>
+    </footer>

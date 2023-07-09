@@ -25,6 +25,30 @@ router.post('/account/20089216/watchlist', function(req, res, next) {
 });
 */
 
+router.get('/auth',function(req,res,next){
+  console.log("api - /auth")
+  config.options.method = 'GET'
+  config.options.url = config.url + "/authentication/token/new"
+  axios.request(config.options).then(resp =>{
+    console.log(resp.data)
+    res.jsonp(resp.data)
+  }).catch(err =>{
+    res.status(404).json({error:err})
+  })
+})
+
+router.get('/session/:rtoken',function(req,res,next){
+  console.log("api - /session")
+  config.options.method = 'GET'
+  config.options.url = config.url + "/authentication/session/new?api_key="+config.my_api_key+ "&request_token=" + req.params.rtoken
+  axios.request(config.options).then(resp =>{
+    console.log(resp.data)
+    res.jsonp(resp.data)
+  }).catch(err =>{
+    res.status(404).json({error:err})
+  })
+})
+
 /***********************************/
 // SEARCH ROUTES
 /***********************************/
@@ -162,7 +186,6 @@ router.get('/movie/top_rated', function(req, res, next) {
 
 /* GET /movie/upcoming */
 router.get('/movie/upcoming', function(req, res, next) {
-  console.log("aqui")
   config.options.method = 'GET'
   if(req.query.page){
     console.log("page entry")

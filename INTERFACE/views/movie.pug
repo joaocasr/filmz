@@ -1,0 +1,73 @@
+extends layout
+
+block content
+    header(id="topBar")
+        div(id="wrap")
+            <a href="/">            
+                <img src="/images/filmz-logos_white.png" style="height:300px;width:300px;margin-top:-80px;margin-left:100px;"/>
+            </a>
+            <div class="searchBar" style="margin-top:30px">    
+                <a href="/search">
+                    <svg width="45px" height="45px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 11.1455C5.49956 8.21437 7.56975 5.69108 10.4445 5.11883C13.3193 4.54659 16.198 6.08477 17.32 8.79267C18.4421 11.5006 17.495 14.624 15.058 16.2528C12.621 17.8815 9.37287 17.562 7.3 15.4895C6.14763 14.3376 5.50014 12.775 5.5 11.1455Z" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                        <path d="M15.989 15.4905L19.5 19.0015" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="menu">
+                a(class="hover item active" onclick="changeActual('home')" id="home") Home
+                a(onclick="changeActual('filmes')" class="hover item " id="filmes") Filmes
+                a(onclick="changeActual('series')" class="hover item " id="series") Séries
+                if(sessionid)
+                    <a class="hover item" id="signout">
+                        <svg style="padding-top:10px" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24" id="sign-out-left-2" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
+                            <polyline id="primary" points="6 15 3 12 6 9" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                            <line id="primary-2" data-name="primary" x1="3" y1="12" x2="17" y2="12" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                            <path id="primary-3" data-name="primary" d="M10,8V5a1,1,0,0,1,1-1h9a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H11a1,1,0,0,1-1-1V16" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                            </svg> Sign out</a>
+                else
+                    <a class="hover item" id="signin" href="/token">
+                        <svg style="padding-top:10px" fill="#000000" height="25px" width="21px" version="1.1" id="XMLID_174_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve">
+                        <g id="login">
+                            <path d="M24,23H9v-8h2v6h11V3H11v6H9V1h15V23z M14.7,17.7l-1.4-1.4l3.3-3.3H1v-2h15.6l-3.3-3.3l1.4-1.4l5.8,5.7L14.7,17.7z" fill="white"/>
+                        </g>
+                        </svg> Sign In</a>
+                
+            </div>
+    - const l = "https://image.tmdb.org/t/p/w1280";
+    - const l1 = filme.backdrop_path
+    - const imageUrl = l.concat('', l1);
+    div(id="mainbackground")
+        div(class="background" style=`background-image: url('${imageUrl}')`)
+        div(class="hover")
+        div(class="wrap")
+            div(class="cartaz")
+                span(class="duration") Filmes Online - Lançamento: #{filme.release_date}
+                    div(class="s" style="font-size:16px;")
+                        svg(fill="#000000" width="14px" height="14px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg")
+                            path(fill="#ffbd0d" d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z")
+                        |  #{filme.vote_average} /10   Filme de #{year}
+                    - var n = filme.runtime
+                    - var hours = Math.floor(n / 60)
+                    - var minutes = Math.round(((n/60)- hours) * 60)
+                    p( style="font:bold;") Duração: #{hours}h, #{minutes}min
+                    p(class="titlecartaz" style="font:bold;") #{filme.title} (original: #{filme.original_title} )
+                    p(style="font:bold;") Géneros:
+                    each genre in filme.genres 
+                        li 
+                            p(style="font:bold;") #{genre.name}
+                    p(class="resumo") #{filme.overview}
+
+    <footer class="mainfooter" role="contentinfo">
+        <div class="footer-middle">
+            <div class="wrap" style="text-align:center;">
+                <h2>PARCEIROS DO FILMZ</h2>
+                <h4>SIGA-NOS NAS REDES SOCIAIS</h4>
+                <a href="https://instagram.com/khonsupx">            
+                    <img src="/images/instagram_icon.png" style="height:52px;width:52px;margin-bottom:10px;"/>
+                </a>
+
+            </div>
+            <div class="containerfooter">© Copyright Todos os direitos reservados João Castro 2023 </div>
+        </div>
+    </footer>

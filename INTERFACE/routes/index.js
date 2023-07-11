@@ -57,7 +57,11 @@ router.get('/auth',function(req,res,next){
 
 router.get('/filmes/:idmovie', function(req,res,next){
   axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie).then(resp =>{
-    res.render('movie',{filme:resp.data,year: resp.data.release_date.substring(0,4)})
+    axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie+"/images").then(images =>{
+      res.render('movie',{filme:resp.data,year: resp.data.release_date.substring(0,4), imagens:images.data})
+      }).catch(err =>{
+      res.render('error',{error:err})
+    })
   }).catch(err =>{
     res.render('error',{error:err})
   })

@@ -165,6 +165,16 @@ body {
   padding-top: 30px;
 }
 
+.gButton {
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 500;
+  line-height: 50px;
+  cursor: pointer;
+}
+
 /*no line in a tag anchor*/
 a {
   text-decoration: none;
@@ -203,6 +213,7 @@ a {
 .border {
   position: absolute;
 }
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(5,245px);
@@ -280,7 +291,6 @@ elemento {
 }
 
 .gPoster {
-
     width: 180px;
     height: auto;
     position: relative;
@@ -288,10 +298,41 @@ elemento {
     font-size: 0;
     padding-top: 265px;
     transition: transform .3s ease-out;
+    z-index: 1;
 }
 
 .gPoster:hover {
   transform: scale(1.1); 
+  z-index: 2;
+}
+
+.gPhoto {
+  position: relative; 
+  z-index: 1;
+}
+.gPhoto:hover {
+  transform: scale(3.0); 
+  z-index: 2;
+}
+
+.extraData {
+  display: block;
+  position: relative;
+}
+
+.grid-container-gallery{
+  display: grid;
+  grid-template-columns: repeat(5,245px);
+  padding-top: 100px;
+}
+
+.gTitle {
+  line-height: 70px;
+  font-size: 32px;
+  color: #fff;
+  font-weight: 300;
+  display: block;
+  padding-top: 140px;
 }
 
 .gPoster .p {

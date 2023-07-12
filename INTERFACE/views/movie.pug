@@ -52,10 +52,10 @@ block content
                     - var minutes = Math.round(((n/60)- hours) * 60)
                     p( style="font:bold;") Duração: #{hours}h, #{minutes}min
                     p(class="titlecartaz" style="font:bold;") #{filme.title} (original: #{filme.original_title} )
-                    p(style="font:bold;") Géneros:
+                    p(style="font:bold;") 
+                        u Géneros
                     each genre in filme.genres 
-                        li 
-                            p(style="font:bold;") #{genre.name}
+                        div(class="moviegenre" style="font:bold;") #{genre.name}
                     p(class="resumo") #{filme.overview}
                     div(class="homebuttons")
                         button.w3-button.w3-round-xxlarge(id="assistir" style="background-color:#1a2a41" class="gButton")
@@ -71,8 +71,15 @@ block content
                         - var linkm = "https://autoembed.to/movie/imdb/"
                         - var movieid = filme.imdb_id
                         - var urlmovie = linkm.concat('',movieid)
-                    //div(id="movieplayer")
-                    //    <iframe src=#{urlmovie} width="500px" height="300px" frameborder="0" allowfullscreen controls></iframe>
+                    div(id="movieplayer" style="padding:30px")
+                        <iframe id="elmovie" src=#{urlmovie} width="500px" height="300px" frameborder="0" allowfullscreen controls hidden></iframe>
+    div(id="itemsList")
+        div(class="itemsListmovies" style="margin-top:220px")
+            div(class="border owl-carousel owl-loaded owl-drag")
+                div(class="owl-stage-outer")
+                    div(class="gTitle" style="margin-left:300px;") Gostou do filme #{filme.title}? Consulte os seguintes filmes relacionados.
+                    div(class="grid-container owl-stage" id="recommendations-grid-container")
+
     div(id="itemsList")
         div(class="wrap")
         div
@@ -80,7 +87,7 @@ block content
                 <div class="wrap">
                 div(class="border owl-carousel owl-loaded owl-drag")
                     div(class="owl-stage-outer")
-                        <div class="gTitle">Galeria</div>
+                        <div class="gTitle"><u>Galeria</u></div>
                         div(class="grid-container-gallery" id="gallery")
                             each imag in imagens.backdrops
                                 div(class="grid-item owl-item active gPhoto")

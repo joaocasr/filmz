@@ -224,6 +224,18 @@ router.get('/movie/:id/images', function(req, res, next) {
   })
 });
 /***********************************/
+
+/*GET /movie/{id}/videos */
+router.get('/movie/:id/videos', function(req, res, next) {
+  config.options.method = 'GET'
+  config.options.url = config.url + "/movie/" + req.params.id +"/videos"
+  axios.request(config.options).then(resp =>{
+    res.jsonp(resp.data);
+  }).catch(err =>{
+    res.status(404).json({error:err})
+  })
+});
+/***********************************/
 /*GET /movie/{id}/recommendations */
 router.get('/movie/:id/recommendations', function(req, res, next) {
   config.options.method = 'GET'

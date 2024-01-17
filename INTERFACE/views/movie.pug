@@ -53,19 +53,19 @@ block content
                     p( style="font:bold;") Duração: #{hours}h, #{minutes}min
                     p(class="titlecartaz" style="font:bold;") #{filme.title} (original: #{filme.original_title} )
                     p(style="font:bold;") 
-                        u Géneros
+                        strong Géneros
                     each genre in filme.genres 
                         div(class="moviegenre" style="font:bold;") #{genre.name}
                     p(class="resumo") #{filme.overview}
                     div(class="homebuttons")
                         button.w3-button.w3-round-xxlarge(id="assistir" style="background-color:#1a2a41" class="gButton")
                             <a href="#" class="gButton">
-                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="20px" transform="translate(0 5)" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="white"/>
                             </svg> Assistir filme</a>
-                        button.w3-button.w3-round-xxlarge(style="background-color:#1a2a41" class="gButton")
+                        button.w3-button.w3-round-xxlarge(onclick="displayTrailer("+filme.id+")" style="background-color:#1a2a41" class="gButton")
                             <a style="margin-top:100px;">
-                                <svg style="margin-right:20px;" fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <svg style="margin-right:20px;" transform="translate(0 5)" fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5.92 24.096q0 1.088 0.928 1.728 0.512 0.288 1.088 0.288 0.448 0 0.896-0.224l16.16-8.064q0.48-0.256 0.8-0.736t0.288-1.088-0.288-1.056-0.8-0.736l-16.16-8.064q-0.448-0.224-0.896-0.224-0.544 0-1.088 0.288-0.928 0.608-0.928 1.728v16.16z" fill="white"/>
                             </svg> Trailer</a>
                         - var linkm = "https://autoembed.to/movie/imdb/"
@@ -77,9 +77,9 @@ block content
         div(class="itemsListmovies" style="margin-top:220px")
             div(class="border owl-carousel owl-loaded owl-drag")
                 div(class="owl-stage-outer")
-                    div(class="gTitle" style="margin-left:300px;") Gostou do filme #{filme.title}? Consulte os seguintes filmes relacionados.
+                    div(class="gTitle" style="margin-left:300px;margin-top:20px;") Gostou do filme #{filme.title}? Consulte os seguintes filmes relacionados.
                     div(class="grid-container owl-stage" id="recommendations-grid-container")
-
+    .modal(id="framedivtrailer" style="background-color:black")
     div(id="itemsList")
         div(class="wrap")
         div

@@ -1,14 +1,15 @@
 # filmz
 
 getting data from TMDB api - using express framework for API
-main routes:
-- /trending
-- /movie/top_rated
-- /movie/upcoming
-- /person/popular
+interface using pug
+Done:
+- display grid of movies, actors, by rank, and of what's trending
+- pagination of movies using AJAX calls (update part of the content without the need of reloading the page when action occurs)
+- diplay info of a movie (title, galery,rank,duration,plot)
+- visualization of a trailer using jquery modal
 
 To do:
-- implement a web view for each movie and add aditional routes in
-order to get info about the details of the movie, recommendations,etc.
+- serch query for movies.
 - authentication service
-- implement more search routes and aditional queries
+- how to display the movie video: by indexing?
+- display info about the actors

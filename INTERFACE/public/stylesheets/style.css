@@ -436,16 +436,41 @@ img {
 
 footer {
   background: #16222A;
-  background: -webkit-linear-gradient(59deg, #456474, #0a2333);
-  background: linear-gradient(59deg, #456474, #0a2333);
+  background: -webkit-linear-gradient(59deg, #222d35, #000000);
+  background: linear-gradient(59deg, #222d35, #000000);
   margin-top:200px;
 }
 
 .containerfooter {
   text-align: center;
   font-family: open sans Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif,sans-serif;
-  color: rgb(0, 0, 0);
+  color: rgb(94, 94, 94);
   text-transform: uppercase;
   letter-spacing: 5px;
   text-align: center;
+}
+
+.DocSearch-Form{
+  border-radius:20px;
+  background: rgb(15, 10, 17);
+  box-shadow: rgb(55, 4, 75);
+  width: 70%;
+  height: 90%;
+  align-items: center;
+  margin-top: 35px;
+}
+
+.DocSearch-Input {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  flex: 1;
+  font: inherit;
+  font-size: inherit;
+  color:whitesmoke;
+  font-size: 1.2em;
+  height: 100%;
+  padding: 10px 10px 20px;
+  outline: none;
+  width: 60%;
 }

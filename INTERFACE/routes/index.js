@@ -55,10 +55,25 @@ router.get('/auth',function(req,res,next){
   })
 });
 
+router.get('/search',function(req,res,next){
+  res.render('search',{content:null})
+})
+
+router.post('/search',function(req,res,next){
+  if(req.body){
+    axios.get(ap.api_accesspoint+"/search/movie?query="+req.body.arquivo).then(conteudos=>{
+      res.render('search',{content:conteudos.data})
+    })
+  }
+})
 router.get('/filmes/:idmovie', function(req,res,next){
   axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie).then(resp =>{
     axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie+"/images").then(images =>{
-      res.render('movie',{filme:resp.data,year: resp.data.release_date.substring(0,4), imagens:images.data})
+      axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie+"/recommendations").then(recommendations =>{
+        res.render('movie',{filme:resp.data,year: resp.data.release_date.substring(0,4), imagens:images.data, movierecs:recommendations.data.results })
+      }).catch(err =>{
+        res.render('error',{error:err})
+      })
       }).catch(err =>{
       res.render('error',{error:err})
     })

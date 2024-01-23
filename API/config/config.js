@@ -12,6 +12,7 @@ module.exports={
 };
 
 module.exports.url="https://api.themoviedb.org/3"
+module.exports.urlv4="https://api.themoviedb.org/4"
 
 module.exports.my_api_key = "f31c324e8f7bf664a34aedac658bfbf5"
 //imagem url example: https://image.tmdb.org/t/p/w220_and_h330_face/{fiVW06jE7z9YnO4trhaMEdclSiC.jpg}

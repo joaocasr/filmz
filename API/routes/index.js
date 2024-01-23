@@ -25,11 +25,14 @@ router.post('/account/20089216/watchlist', function(req, res, next) {
 });
 */
 
-router.get('/auth',function(req,res,next){
-  console.log("api - /auth")
-  config.options.method = 'GET'
-  config.options.url = config.url + "/authentication/token/new"
+router.get('/auth/access_token',function(req,res,next){
+  console.log("entrou");
+  config.options.method = 'POST';
+  config.options.headers['content-type'] = 'application/json';
+  config.options.url= config.urlv4+"/auth/access_token";
+  console.log(config.options);
   axios.request(config.options).then(resp =>{
+    console.log("data from access_token request")
     console.log(resp.data)
     res.jsonp(resp.data)
   }).catch(err =>{
@@ -37,10 +40,10 @@ router.get('/auth',function(req,res,next){
   })
 })
 
-router.get('/session/:rtoken',function(req,res,next){
-  console.log("api - /session")
+router.get('/auth/request_token',function(req,res,next){
   config.options.method = 'GET'
-  config.options.url = config.url + "/authentication/session/new?api_key="+config.my_api_key+ "&request_token=" + req.params.rtoken
+  config.options.headers['content-type'] = 'application/json';
+  config.options.url= config.url+"/authentication/token/new";
   axios.request(config.options).then(resp =>{
     console.log(resp.data)
     res.jsonp(resp.data)
@@ -281,5 +284,17 @@ router.get('/person/popular', function(req, res, next) {
     res.status(404).json({error:err})
   })
 });
+
+
+router.get('/account/:account_id/watchlist/movies',function(req,res,next){
+  config.options.method = 'GET'
+  config.options.url = config.url + "/account/"+req.params.account_id+"/watchlist/movies"
+  axios.request(config.options).then(resp =>{
+    res.jsonp(resp.data)
+  }).catch(err =>{
+    res.status(404).json({error:err})
+  })
+})
+
 
 module.exports = router;

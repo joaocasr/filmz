@@ -88,6 +88,7 @@ body {
   background: linear-gradient(0deg,var(--darkbg) 0,rgba(11,11,14,.95) 22%,rgba(7,6,10,.75) 58%,rgba(7,6,10,.65) 100%);
 }
 
+
 .hover {
   -webkit-transition: all .3s ease-in-out;
   -o-transition: all .31s ease-in-out;
@@ -113,7 +114,6 @@ body {
   position: relative;
   font-size: 0;
   margin-bottom: 40px;
-  margin-right: 200px;
   padding-top: 20px;
 }
 
@@ -474,3 +474,4 @@ footer {
   outline: none;
   width: 60%;
 }
+

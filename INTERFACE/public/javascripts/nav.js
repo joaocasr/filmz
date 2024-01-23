@@ -1,8 +1,8 @@
 function changeActual(id){
     
         var v1 = document.getElementById("home");
-        var v2 = document.getElementById("filmes");
-        var v3 = document.getElementById("series")
+        var v2 = document.getElementById("watchlist");
+        var v3 = document.getElementById("favourites")
     
         v1.classList.remove("active");
         v2.classList.remove("active");

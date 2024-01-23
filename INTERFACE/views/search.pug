@@ -16,13 +16,43 @@ block content
                 </label>
                 <input class="DocSearch-Input" id="docsearch-input" enterkeyhint="search" spellcheck="false" name="arquivo" autofocus="true" placeholder="Pesquise por filmes ou séries" maxlength="64" type="search">
             </form>
-            if content
-                p content
     - const l = "https://cdn.wallpapersafari.com/43/87/tWBJK5.jpg";
     div(id="mainbackground")
         div(class="background" style=`background-image: url('${l}')`)
         div(class="hover")
         div(class="wrap")
+    div(id="itemsList")
+            div(class="itemsListmovies")
+                if content
+                    div(class="border owl-carousel owl-loaded owl-drag")
+                        div(class="owl-stage-outer")
+                            div(class="grid-container owl-stage" id="movies-grid-container")
+                                each movieoutput in content
+                                    <div class="grid-item owl-item active" style="width: auto; ">
+                                        a(class="gPoster" title="Assistir:" + movieoutput.title href="/filmes/" + movieoutput.id)
+                                            div(class="inner")
+                                                div(class="p")
+                                                    if(movieoutput.poster_path)
+                                                        img(src="https://image.tmdb.org/t/p/w220_and_h330_face" + movieoutput.poster_path alt="Assistir: " + movieoutput.title)
+                                                    else 
+                                                        img(src="/images/undefined.png")
+                                                div(class="i")
+                                                    span #{movieoutput.title} 
+                                                    div(class="mi")
+                                                        div(class="y") #{movieoutput.release_date} 
+                                                        div(class="r") #{movieoutput.vote_average}
+                                                        div(class="s")
+                                                            <svg fill="#000000" width="10px" height="10px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffbd0d" d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z"></path></svg>
+                                                        div(class="t") #{movieoutput.popularity}
+                                    </div>
+                    div(class="pagbuttons")
+                        button.w3-button.w3-round-large(id="back" style="background-color:#1a2a41" class="gButton")
+                            <svg width="50px" height="50px" transform="translate(-3 10)" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="white"/></svg>
+                        button.w3-button.w3-round-large(id="actualpage" style="background-color:#1a2a41" class="gButton" value=1) 1
+                        button.w3-button.w3-round-large(id="nullpage" style="background-color:#1a2a41" class="gButton" value=0) ...
+                        button.w3-button.w3-round-large(id="lastpage" style="background-color:#1a2a41" class="gButton" value=0)
+                        button.w3-button.w3-round-large(id="forward" style="background-color:#1a2a41" class="gButton")
+                            <svg width="50px" height="50px" viewBox="0 0 1024 1024" transform="translate(3 10)" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="white"/></svg>
     <footer class="mainfooter" role="contentinfo">
         <div class="footer-middle">
             <div class="wrap" style="text-align:center;">

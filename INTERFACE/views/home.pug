@@ -19,8 +19,8 @@ block content
                 if accountid
                     a(onclick="changeActual('watchlist')" href="/watchlist/"+accountid class="hover item " id="watchlist") Watchlist
                     a(onclick="changeActual('favourites')" class="hover item " id="favourites") Favourites
-                if accountid
-                    <a class="hover item" id="signout">
+                if rtoken
+                    <a class="hover item" href="/logout" id="signout">
                         <svg style="padding-top:10px" fill="#000000" height="25px" width="21px" viewBox="0 0 24 24" id="sign-out-left-2" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
                             <polyline id="primary" points="6 15 3 12 6 9" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
                             <line id="primary-2" data-name="primary" x1="3" y1="12" x2="17" y2="12" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>

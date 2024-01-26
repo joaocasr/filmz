@@ -33,3 +33,23 @@ function displayTrailer(movieid){
     })
 
 }
+
+function watchlistclick(movieid,account_id,token){
+  $.ajax({
+    url:"http://localhost:7777/account/"+account_id+"/watchlist/"+token,
+    data:{
+        api_key:"f31c324e8f7bf664a34aedac658bfbf5",
+        region: 'US'
+    },
+    body:{media_type: 'movie', media_id: movieid,watchlist: true },
+    method: 'POST',
+    dataType:'jsonp',
+    start_time: new Date().getTime()
+    }).fail(function(response){
+        console.log("failed")
+        console.log(response)
+    }).done(function(data){
+        console.log("done")
+        console.log(data)
+    })
+}

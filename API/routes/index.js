@@ -281,23 +281,22 @@ router.get('/account/:account_id/watchlist/movies',function(req,res,next){
 /***********************************/
 // POST- ADD TO WATCHLIST
 /***********************************/
-//"{'media_type': 'movie', 'media_id': 550, 'watchlist': true}"
 
-router.post('/account/:account_id/watchlist', function(req, res, next) {
+// config.url="https://api.themoviedb.org/3"
+router.post('/account/:account_id/watchlist/:mytoken', function(req, res, next) {
   config.options.method = 'POST'
   config.options.headers['Content-Type'] = 'application/json'
   config.options.headers['Accept']='application/json'
-  config.options.url = config.url + "/authentication/session/new?api_key="+config.my_api_key+"&request_token="+req.body.mytoken
+  config.options.url = config.url + "/authentication/session/new?api_key="+config.my_api_key+"&request_token="+req.params.mytoken
   axios.request(config.options).then(resp =>{
     sessionid=resp.data.session_id
     console.log("sessão id _:"+sessionid)
-    req.body['media_type'] = 'movie'
-    req.body['media_id'] = 550
-    req.body['watchlist'] = true
-    config.options.body = req.body
+    const requestData = req.body;
+    config.options.data = requestData
     config.options.url = config.url + "/account/"+req.params.account_id+"/watchlist?api_key="+config.my_api_key+"&session_id="+sessionid
     axios.request(config.options).then(resp =>{
       res.jsonp(resp.data);
+      delete config.options.data
     }).catch(err =>{
       res.status(404).json({error:err})
     })    

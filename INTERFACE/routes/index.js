@@ -7,23 +7,14 @@ var jwt = require('jsonwebtoken')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if(req.query.approved){
-    res.render('home',{accountid:"johnnytuga"});
-    /*axios.get(ap.api_accesspoint+"/auth/access_token").then(resp =>{
-      accid=resp.data.account_id
-      res.render('home',{accountid:accid});
-    }).catch(err =>{
-      res.render('error',{error:err})
-    })*/
+  if(req.cookies.access_token){
+    token = req.cookies.access_token;
+    current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
+    res.render('home',{accountid:"johnnytuga",rtoken:current_token.request_token});
   }
   else{
-    res.render('home',{accountid:null});
+    res.render('home',{accountid:null,rtoken:null});
   } 
-  /*axios.get(ap.api_accesspoint+'/movie/upcoming').then(resp =>{
-    res.render('home',{brev:resp.data.results});
-  }).catch(err =>{
-    res.render('error',{error:err})
-  })*/
 });
 
 router.get('/token', function(req, res, next) {
@@ -33,23 +24,27 @@ router.get('/token', function(req, res, next) {
   var current_token = null
   var expiration = null
   var now = null
-  if(req.cookies!=null){
+  if(req.cookies.access_token!=null){
     token = req.cookies.access_token
     exists=true
     current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
     expiration = new Date(current_token.expires_at).getTime()- 3600000
     now = new Date().getTime()  
   }
-  if(exists && now>expiration){
-    res.redirect('/auth/request_token')
+  console.log(current_token)
+  console.log("ahora:"+now)
+  console.log("exp:"+expiration)
+  if(exists && now<expiration && now-current_token.timestamp<900000){
+    res.redirect("https://www.themoviedb.org/authenticate/"+current_token.request_token+"?redirect_to=http://localhost:7778/?approved=true")
   }else{
-    res.redirect("https://www.themoviedb.org/authenticate/"+token+"?redirect_to=http://localhost:7778/?approved=true")
+    res.redirect('/auth/request_token')
   }
 })
 
 router.get('/auth/request_token',function(req,res,next){
   axios.get(ap.api_accesspoint+"/auth/request_token").then(resp =>{
-    var data = new Date().getTime().toString()
+    var data = new Date().getTime()
+    resp.data['timestamp']= data
     const token = jwt.sign(resp.data, "MY_TOKEN");
     res.cookie("access_token", token, {
       httpOnly: true
@@ -93,6 +88,13 @@ router.get('/watchlist/:account_id',function(req,res,next){
   }).catch(err =>{
     res.render('error',{error:err})
   })
+})
+
+
+router.get('/logout',function(req,res,next){  
+  res.clearCookie("access_token")
+  res.render('home',{accountid:null,rtoken:null});
+  res.end()
 })
 
 module.exports = router;

@@ -226,6 +226,15 @@ a {
   position: absolute;
 }
 
+
+.grid-container-watchlist {
+  display: grid;
+  grid-template-columns: repeat(5,245px);
+  align-items: center;
+  justify-items: center;
+  position: absolute;
+}
+
 .grid-item {
   font-size: 30px;
 }

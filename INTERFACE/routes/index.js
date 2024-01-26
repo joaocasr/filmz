@@ -3,6 +3,7 @@ var axios = require('axios')
 var ap = require('../ap/env')
 var router = express.Router();
 var fs = require('fs')
+var jwt = require('jsonwebtoken')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -26,35 +27,33 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/token', function(req, res, next) {
-  console.log("interface - /token")
-  const dir = 'tokens/';
+  console.log("/token")
   exists=false
-  fs.readdirSync(dir).forEach(file => {
-    date1 = parseInt(file);
-    console.log(date1);
-    date2 = new Date().getTime();
-    console.log(date2);
-    if((Math.abs(date2-date1)/3600000)<1 && exists==false){
-      exists=true
-      fs.readFile("tokens/"+file,function(err,data){
-        if(err) console.log(err)
-        else{
-          currentToken= data
-          console.log("current token: "+currentToken)
-          res.redirect("https://www.themoviedb.org/authenticate/"+currentToken+"?redirect_to=http://localhost:7778/?approved=true")
-        }
-      })
-    }
-  })
-  if(exists==false){
+  var token=null
+  var current_token = null
+  var expiration = null
+  var now = null
+  if(req.cookies!=null){
+    token = req.cookies.access_token
+    exists=true
+    current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
+    expiration = new Date(current_token.expires_at).getTime()- 3600000
+    now = new Date().getTime()  
+  }
+  if(exists && now>expiration){
     res.redirect('/auth/request_token')
+  }else{
+    res.redirect("https://www.themoviedb.org/authenticate/"+token+"?redirect_to=http://localhost:7778/?approved=true")
   }
 })
 
 router.get('/auth/request_token',function(req,res,next){
   axios.get(ap.api_accesspoint+"/auth/request_token").then(resp =>{
     var data = new Date().getTime().toString()
-    fs.writeFileSync('tokens/'+data,resp.data.request_token);
+    const token = jwt.sign(resp.data, "MY_TOKEN");
+    res.cookie("access_token", token, {
+      httpOnly: true
+    })
     res.redirect("https://www.themoviedb.org/authenticate/"+resp.data.request_token+"?redirect_to=http://localhost:7778/?approved=true")
   }).catch(err =>{
     res.render('error',{error:err})

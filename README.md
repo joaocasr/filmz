@@ -10,17 +10,10 @@ Done:
 - pagination of movies using AJAX calls (update part of the content without the need of reloading the page when action occurs)
 - diplay info of a movie (title, galery,rank,duration,plot)
 - visualization of a trailer using jquery modal
+- query for search for movies and series.
+- authentication using token generation through TMDB API
 
 To do:
-- serch query for movies.
-- authentication service
-- how to display the movie video: by indexing?
+- display the movie video
 - display info about the actors
 
-
-Current view of web app view:
-<img src="docs/Captura de ecrã de 2024-01-17 22-24-17.png" width="800px"/>
-<img src="docs/Captura de ecrã de 2024-01-17 22-24-24.png" width="800px"/>
-<img src="docs/Captura de ecrã de 2024-01-17 22-24-46.png" width="800px"/>
-<img src="docs/Captura de ecrã de 2024-01-17 22-25-16.png" width="800px"/>
-<img src="docs/Captura de ecrã de 2024-01-17 22-25-36.png" width="800px"/>

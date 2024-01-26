@@ -16,8 +16,8 @@ block content
             </div>
             <div class="menu">
                 a(class="hover item active" onclick="changeActual('home')" id="home") Home
-                a(onclick="changeActual('filmes')" class="hover item " id="filmes") Filmes
-                a(onclick="changeActual('series')" class="hover item " id="series") Séries
+                a(onclick="changeActual('watchlist')" class="hover item " id="watchlist") Watchlist
+                a(onclick="changeActual('favourites')" class="hover item " id="favourites") Favourites
                 if(sessionid)
                     <a class="hover item" id="signout">
                         <svg style="padding-top:10px" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24" id="sign-out-left-2" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
@@ -92,7 +92,7 @@ block content
                                                 div(class="r") #{movierec.vote_average} 
                                                 div(class="s")
                                                     <svg fill="#000000" width="10px" height="10px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffbd0d" d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z"></path></svg>
-                                                div(class="t") movierec.popularity
+                                                div(class="t") #{movierec.popularity}
                             </div>
     .modal(id="framedivtrailer" style="background-color:black")
     div(id="itemsList")

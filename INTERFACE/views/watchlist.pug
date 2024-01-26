@@ -1,5 +1,62 @@
 extends movie_layout 
 
 block content
-    if watchlist
-        p #{JSON.stringify(watchlist)}
+    header(id="topBar")
+        div(id="wrap")
+            <a href="/">            
+                <img src="/images/filmz-logos_white.png" style="height:300px;width:300px;margin-top:-80px;margin-left:100px;"/>
+            </a>
+            <div class="searchBar" style="margin-top:30px">    
+                <a href="/search">
+                    <svg width="45px" height="45px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 11.1455C5.49956 8.21437 7.56975 5.69108 10.4445 5.11883C13.3193 4.54659 16.198 6.08477 17.32 8.79267C18.4421 11.5006 17.495 14.624 15.058 16.2528C12.621 17.8815 9.37287 17.562 7.3 15.4895C6.14763 14.3376 5.50014 12.775 5.5 11.1455Z" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                        <path d="M15.989 15.4905L19.5 19.0015" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="menu">
+                a(class="hover item " onclick="changeActual('home')" id="home") Home
+                a(onclick="changeActual('watchlist')" href="/watchlist/"+accountid class="hover item active" id="watchlist") Watchlist
+                a(onclick="changeActual('favourites')" class="hover item " id="favourites") Favourites
+                <a class="hover item" id="signout">
+                    <svg style="padding-top:10px" fill="#000000" height="25px" width="21px" viewBox="0 0 24 24" id="sign-out-left-2" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
+                        <polyline id="primary" points="6 15 3 12 6 9" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                        <line id="primary-2" data-name="primary" x1="3" y1="12" x2="17" y2="12" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                        <path id="primary-3" data-name="primary" d="M10,8V5a1,1,0,0,1,1-1h9a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H11a1,1,0,0,1-1-1V16" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                        </svg> Sign out</a>
+            </div>
+    div(id="mainbackground")
+        div(class="wrap2")
+            <div style="color:white;margin-bottom:80px;font-size:30px">Your Watchlist</div>
+            if watchlist
+                each movie in watchlist.results 
+                    <div class="grid-item owl-item active" style="width: auto; ">
+                        a(class="gPoster" title="Assistir:" + movie.title href="/filmes/" + movie.id)
+                            div(class="inner")
+                                div(class="p")
+                                    if(movie.backdrop_path)
+                                        img(src="https://image.tmdb.org/t/p/w220_and_h330_face" + movie.backdrop_path alt="Assistir: " + movie.title)
+                                    else 
+                                        img(src="/images/undefined.png")
+                                div(class="i")
+                                    span #{movie.title} 
+                                    div(class="mi")
+                                        div(class="y") #{movie.release_date} 
+                                        div(class="r") #{movie.vote_average}
+                                        div(class="s")
+                                            <svg fill="#000000" width="10px" height="10px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffbd0d" d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z"></path></svg>
+                                        div(class="t") #{movie.popularity}
+                    </div>
+            else 
+                <div style="color:white;margin-top:20px;font-size:20px">De momento não possui nenhum filme ou série na sua Watchlist.</div>
+        div(class="itemsListmovies")
+            div(class="pagbuttons")
+                input(type="hidden" id="pagetype" value="upcoming")
+                button.w3-button.w3-round-large(id="back" style="background-color:#1a2a41" class="gButton")
+                    <svg width="50px" height="50px" transform="translate(-3 10)" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="white"/></svg>
+                button.w3-button.w3-round-large(id="actualpage" style="background-color:#1a2a41" class="gButton" value=1) 1
+                button.w3-button.w3-round-large(id="nullpage" style="background-color:#1a2a41" class="gButton" value=0) ...
+                button.w3-button.w3-round-large(id="lastpage" style="background-color:#1a2a41" class="gButton" value=0)
+                button.w3-button.w3-round-large(id="forward" style="background-color:#1a2a41" class="gButton")
+                    <svg width="50px" height="50px" viewBox="0 0 1024 1024" transform="translate(3 10)" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="white"/></svg>
+

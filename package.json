@@ -7,8 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start:all": "concurrently \"npm start --prefix API\" \"npm start --prefix INTERFACE\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:all": "concurrently \"npm start --prefix API\" \"npm start --prefix INTERFACE\""
   },
   "author": "João Castro",
   "license": "ISC"

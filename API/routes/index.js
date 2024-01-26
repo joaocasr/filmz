@@ -4,27 +4,6 @@ var config = require('../config/config')
 var router = express.Router();
 
 
-/***********************************/
-// POST- ADD TO WATCHLIST
-/***********************************/
-/* session id needed
-router.post('/account/20089216/watchlist', function(req, res, next) {
-  config.options.method = 'POST' 
-  config.options.body = req.body
-  config.options.headers['content-type'] = 'application/json'
-  config.options.url = config.url + "/account/20089216/watchlist"
-  console.log(config.options)
-  console.log(req.body)
-  axios.request(config.options).then(resp =>{
-    res.jsonp(resp.data);
-  }).catch(err =>{
-    res.status(404).json({error:err})
-  })
-  config.options.body={}
-  config.options.headers.delete('content-type')
-});
-*/
-
 router.get('/auth/access_token',function(req,res,next){
   console.log("entrou");
   config.options.method = 'POST';
@@ -286,6 +265,9 @@ router.get('/person/popular', function(req, res, next) {
 });
 
 
+/***********************************/
+// GET- GET ALL WATCHLIST
+/***********************************/
 router.get('/account/:account_id/watchlist/movies',function(req,res,next){
   config.options.method = 'GET'
   config.options.url = config.url + "/account/"+req.params.account_id+"/watchlist/movies"
@@ -295,6 +277,34 @@ router.get('/account/:account_id/watchlist/movies',function(req,res,next){
     res.status(404).json({error:err})
   })
 })
+
+/***********************************/
+// POST- ADD TO WATCHLIST
+/***********************************/
+//"{'media_type': 'movie', 'media_id': 550, 'watchlist': true}"
+
+router.post('/account/:account_id/watchlist', function(req, res, next) {
+  config.options.method = 'POST'
+  config.options.headers['Content-Type'] = 'application/json'
+  config.options.headers['Accept']='application/json'
+  config.options.url = config.url + "/authentication/session/new?api_key="+config.my_api_key+"&request_token="+req.body.mytoken
+  axios.request(config.options).then(resp =>{
+    sessionid=resp.data.session_id
+    console.log("sessão id _:"+sessionid)
+    req.body['media_type'] = 'movie'
+    req.body['media_id'] = 550
+    req.body['watchlist'] = true
+    config.options.body = req.body
+    config.options.url = config.url + "/account/"+req.params.account_id+"/watchlist?api_key="+config.my_api_key+"&session_id="+sessionid
+    axios.request(config.options).then(resp =>{
+      res.jsonp(resp.data);
+    }).catch(err =>{
+      res.status(404).json({error:err})
+    })    
+  }).catch(err =>{
+    res.status(404).json({error:err})
+  })
+});
 
 
 module.exports = router;

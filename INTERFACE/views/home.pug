@@ -16,9 +16,9 @@ block content
             </div>
             <div class="menu">
                 a(class="hover item active" onclick="changeActual('home')" id="home") Home
-                if accountid
-                    a(onclick="changeActual('watchlist')" href="/watchlist/"+accountid class="hover item " id="watchlist") Watchlist
-                    a(onclick="changeActual('favourites')" class="hover item " id="favourites") Favourites
+                if username
+                    a(onclick="changeActual('watchlist')" href="/watchlist/"+username class="hover item " id="watchlist") Watchlist
+                    a(onclick="changeActual('favourites')" href="/favourites" class="hover item " id="favourites") Favourites
                 if rtoken
                     <a class="hover item" href="/logout" id="signout">
                         <svg style="padding-top:10px" fill="#000000" height="25px" width="21px" viewBox="0 0 24 24" id="sign-out-left-2" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">

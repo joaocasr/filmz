@@ -2,18 +2,17 @@ var express = require('express');
 var axios = require('axios')
 var ap = require('../ap/env')
 var router = express.Router();
-var fs = require('fs')
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   if(req.cookies.access_token){
     token = req.cookies.access_token;
     current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
-    res.render('home',{accountid:"johnnytuga",rtoken:current_token.request_token});
+    res.render('home',{username:current_token.user,rtoken:current_token.request_token});
   }
   else{
-    res.render('home',{accountid:null,rtoken:null});
+    res.render('home',{username:null,rtoken:null});
   } 
 });
 
@@ -30,26 +29,36 @@ router.get('/token', function(req, res, next) {
     current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
     expiration = new Date(current_token.expires_at).getTime()- 3600000
     now = new Date().getTime()  
+    console.log(current_token)
+    console.log("ahora:"+now)
+    console.log("exp:"+expiration)
   }
-  console.log(current_token)
-  console.log("ahora:"+now)
-  console.log("exp:"+expiration)
   if(exists && now<expiration && now-current_token.timestamp<900000){
-    res.redirect("https://www.themoviedb.org/authenticate/"+current_token.request_token+"?redirect_to=http://localhost:7778/?approved=true")
+    res.clearCookie("access_token");
+    res.redirect("https://www.themoviedb.org/authenticate/"+current_token.request_token+"?redirect_to=http://localhost:7778/");
+    res.end();
   }else{
-    res.redirect('/auth/request_token')
+    res.redirect('/auth/request_token');
   }
 })
 
 router.get('/auth/request_token',function(req,res,next){
   axios.get(ap.api_accesspoint+"/auth/request_token").then(resp =>{
-    var data = new Date().getTime()
-    resp.data['timestamp']= data
-    const token = jwt.sign(resp.data, "MY_TOKEN");
-    res.cookie("access_token", token, {
-      httpOnly: true
+    axios.get(ap.api_accesspoint+"/account").then(userinfo=>{
+      var data = new Date().getTime()
+      resp.data['timestamp']= data
+      resp.data['user']= userinfo.data['username']
+      resp.data['id']= userinfo.data['id']
+      console.log(userinfo.data)
+      const token = jwt.sign(resp.data, "MY_TOKEN");
+      res.cookie("access_token", token, {
+        httpOnly: true
+      })
+      res.redirect("https://www.themoviedb.org/authenticate/"+resp.data.request_token+"?redirect_to=http://localhost:7778/")
+  
+    }).catch(err =>{
+      res.render('error',{error:err})
     })
-    res.redirect("https://www.themoviedb.org/authenticate/"+resp.data.request_token+"?redirect_to=http://localhost:7778/?approved=true")
   }).catch(err =>{
     res.render('error',{error:err})
   })
@@ -66,11 +75,16 @@ router.post('/search',function(req,res,next){
     })
   }
 })
+
 router.get('/filmes/:idmovie', function(req,res,next){
+  var token = req.cookies.access_token;
+  var current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
   axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie).then(resp =>{
     axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie+"/images").then(images =>{
       axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie+"/recommendations").then(recommendations =>{
-        res.render('movie',{filme:resp.data,year: resp.data.release_date.substring(0,4), imagens:images.data, movierecs:recommendations.data.results })
+        res.render('movie',{filme:resp.data,year: resp.data.release_date.substring(0,4), imagens:images.data, movierecs:recommendations.data.results,
+          username:current_token.user,
+          rtoken:current_token.request_token })
       }).catch(err =>{
         res.render('error',{error:err})
       })
@@ -83,18 +97,29 @@ router.get('/filmes/:idmovie', function(req,res,next){
 })
 
 router.get('/watchlist/:account_id',function(req,res,next){
+  var token = req.cookies.access_token;
+  var current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
   axios.get(ap.api_accesspoint+"/account/"+req.params.account_id+"/watchlist/movies").then(mywatchlist=>{
-    res.render('watchlist',{watchlist:mywatchlist.data})
+    res.render('watchlist',{username:current_token.user,watchlist:mywatchlist.data})
   }).catch(err =>{
     res.render('error',{error:err})
   })
 })
 
+router.get('/favourites',function(req,res,next){
+  var token = req.cookies.access_token;
+  var current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
+  axios.get(ap.api_accesspoint+"/account/"+current_token.id+"/favorite/movies").then(favourites=>{
+    res.render('favourites',{username:current_token.user,myfavourites:favourites.data,id:current_token.id})
+  }).catch(err =>{
+    res.render('error',{error:err})
+  })
+})
 
 router.get('/logout',function(req,res,next){  
-  res.clearCookie("access_token")
-  res.render('home',{accountid:null,rtoken:null});
-  res.end()
+  res.clearCookie("access_token");
+  res.render('home',{username:null,rtoken:null});
+  res.end();
 })
 
 module.exports = router;

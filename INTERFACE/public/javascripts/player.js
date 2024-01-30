@@ -35,21 +35,27 @@ function displayTrailer(movieid){
 }
 
 function watchlistclick(movieid,account_id,token){
-  $.ajax({
-    url:"http://localhost:7777/account/"+account_id+"/watchlist/"+token,
-    data:{
-        api_key:"f31c324e8f7bf664a34aedac658bfbf5",
-        region: 'US'
-    },
-    body:{media_type: 'movie', media_id: movieid,watchlist: true },
-    method: 'POST',
-    dataType:'jsonp',
-    start_time: new Date().getTime()
-    }).fail(function(response){
-        console.log("failed")
-        console.log(response)
-    }).done(function(data){
-        console.log("done")
-        console.log(data)
-    })
+    console.log("entrou na watchlistclick");
+    console.log(movieid);
+    console.log(account_id);
+    console.log(token);
+    if(token==undefined){
+        return 0;
+    }
+    $.post("http://localhost:7777/account/"+account_id+"/watchlist/"+token,
+        {
+            media_type: 'movie',
+            media_id: movieid,
+            watchlist: true
+        },
+        function(data, statusText, xhr){
+            console.log(xhr)
+            console.log("aqui")
+            console.log(xhr.status)
+            if(xhr.status==200){
+                console.log("eureka.")
+            }else{
+                console.log("already exists or token invalid.")
+            }
+        });
 }

@@ -284,6 +284,7 @@ router.get('/account/:account_id/watchlist/movies',function(req,res,next){
 
 // config.url="https://api.themoviedb.org/3"
 router.post('/account/:account_id/watchlist/:mytoken', function(req, res, next) {
+  console.log("entrouentrando")
   config.options.method = 'POST'
   config.options.headers['Content-Type'] = 'application/json'
   config.options.headers['Accept']='application/json'
@@ -305,5 +306,31 @@ router.post('/account/:account_id/watchlist/:mytoken', function(req, res, next) 
   })
 });
 
+router.get('/account/:accountid/favorite/movies',function(req,res,next){
+  config.options.method='GET'
+  config.options.headers['Content-Type'] = 'application/json'
+  config.options.headers['Accept']='application/json'
+  config.options.url=config.url+"/account/"+req.params.accountid+"/favorite/movies"
+  axios.request(config.options).then(resp=>{
+    res.jsonp(resp.data)
+  }).catch(err=>{
+    res.status(404).json({error:err})
+  })
+})
+
+
+
+//get user my user id and username 
+router.get('/account',function(req,res,next){
+  config.options.method='GET'
+  config.options.headers['Content-Type'] = 'application/json'
+  config.options.headers['Accept']='application/json'
+  config.options.url=config.url+"/account/"+null
+  axios.request(config.options).then(resp=>{
+    res.jsonp(resp.data)
+  }).catch(err=>{
+    res.status(404).json({error:err})
+  })
+})
 
 module.exports = router;

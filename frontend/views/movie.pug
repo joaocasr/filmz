@@ -1,0 +1,155 @@
+extends movie_layout
+
+block content
+    header(id="topBar")
+        div(id="wrap")
+            <a href="/">            
+                <img src="/images/filmz-logos_white.png" style="height:300px;width:300px;margin-top:-80px;margin-left:100px;"/>
+            </a>
+            <div class="searchBar" style="margin-top:30px">    
+                <a href="/search">
+                    <svg width="45px" height="45px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 11.1455C5.49956 8.21437 7.56975 5.69108 10.4445 5.11883C13.3193 4.54659 16.198 6.08477 17.32 8.79267C18.4421 11.5006 17.495 14.624 15.058 16.2528C12.621 17.8815 9.37287 17.562 7.3 15.4895C6.14763 14.3376 5.50014 12.775 5.5 11.1455Z" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                        <path d="M15.989 15.4905L19.5 19.0015" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" stroke="white"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="menu">
+                a(class="hover item active" onclick="changeActual('home')" id="home") Home
+                if rtoken
+                    a(onclick="changeActual('watchlist')" class="hover item " href="/watchlist/johnnytuga" id="watchlist") Watchlist
+                    a(onclick="changeActual('favourites')" class="hover item " id="favourites") Favourites
+                    <a class="hover item" id="signout">
+                        <svg style="padding-top:10px" fill="#000000" height="25px" width="21px" viewBox="0 0 24 24" id="sign-out-left-2" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
+                            <polyline id="primary" points="6 15 3 12 6 9" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                            <line id="primary-2" data-name="primary" x1="3" y1="12" x2="17" y2="12" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                            <path id="primary-3" data-name="primary" d="M10,8V5a1,1,0,0,1,1-1h9a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H11a1,1,0,0,1-1-1V16" style="fill: none; stroke: rgb(255,255,255); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                            </svg> Sign out</a>
+                else
+                    <a class="hover item" id="signin" href="/token">
+                        <svg style="padding-top:10px" fill="#000000" height="25px" width="21px" version="1.1" id="XMLID_174_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve">
+                        <g id="login">
+                            <path d="M24,23H9v-8h2v6h11V3H11v6H9V1h15V23z M14.7,17.7l-1.4-1.4l3.3-3.3H1v-2h15.6l-3.3-3.3l1.4-1.4l5.8,5.7L14.7,17.7z" fill="white"/>
+                        </g>
+                        </svg> Sign In</a>
+                
+            </div>
+    - const l = "https://image.tmdb.org/t/p/w1280";
+    - const l1 = filme.backdrop_path
+    - const imageUrl = l.concat('', l1);
+    div(id="mainbackground")
+        div(class="background" style=`background-image: url('${imageUrl}')`)
+        div(class="hover")
+        div(class="wrap")
+            div(class="cartaz")
+                span(class="duration") Filmes Online - Lançamento: #{filme.release_date}
+                    div(class="s" style="font-size:16px;")
+                        svg(fill="#000000" width="14px" height="14px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg")
+                            path(fill="#ffbd0d" d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z")
+                        |  #{filme.vote_average} /10  - Filme de #{year}
+                    - var n = filme.runtime
+                    - var hours = Math.floor(n / 60)
+                    - var minutes = Math.round(((n/60)- hours) * 60)
+                    p( style="font:bold;") Duração: #{hours}h, #{minutes}min
+                    if username
+                        p 
+                            button(id="watchlistbtn" data-button='{"mwatchlist": '+watchlist+'}' onclick="watchlistclick(`"+filme.id+"`,`"+username+"`,`"+rtoken+"`)" style="background:transparent;border: none;")
+                                <a title="Adicionar à Watchlist" style="cursor:pointer;">
+                                    if watchlist
+                                        <svg id="watchlist_marked" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="none">
+                                            <path d="M14 16L16.1 18.5L20 13.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M10 14H3" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M10 18H3" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M3 6L13.5 6M20 6L17.75 6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M20 10L9.5 10M3 10H5.25" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    else
+                                        <svg id="watchlist_unmarked" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="white">
+                                            <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M2.25 6C2.25 5.58579 2.58579 5.25 3 5.25H20C20.4142 5.25 20.75 5.58579 20.75 6C20.75 6.41421 20.4142 6.75 20 6.75H3C2.58579 6.75 2.25 6.41421 2.25 6ZM2.25 11C2.25 10.5858 2.58579 10.25 3 10.25H11C11.4142 10.25 11.75 10.5858 11.75 11C11.75 11.4142 11.4142 11.75 11 11.75H3C2.58579 11.75 2.25 11.4142 2.25 11ZM2.25 16C2.25 15.5858 2.58579 15.25 3 15.25H11C11.4142 15.25 11.75 15.5858 11.75 16C11.75 16.4142 11.4142 16.75 11 16.75H3C2.58579 16.75 2.25 16.4142 2.25 16Z" fill="white"/>
+                                            <path d="M14.4697 10.4697C14.7626 10.1768 15.2374 10.1768 15.5303 10.4697L17.5 12.4393L19.4697 10.4697C19.7626 10.1768 20.2374 10.1768 20.5303 10.4697C20.8232 10.7626 20.8232 11.2374 20.5303 11.5303L18.5607 13.5L20.5303 15.4697C20.8232 15.7626 20.8232 16.2374 20.5303 16.5303C20.2374 16.8232 19.7626 16.8232 19.4697 16.5303L17.5 14.5607L15.5303 16.5303C15.2374 16.8232 14.7626 16.8232 14.4697 16.5303C14.1768 16.2374 14.1768 15.7626 14.4697 15.4697L16.4393 13.5L14.4697 11.5303C14.1768 11.2374 14.1768 10.7626 14.4697 10.4697Z" fill="white"/>
+                                        </svg>
+                                </a>
+                            button(id="favouritebtn" data-button='{"mfavourite":'+favourite+'}' onclick="favouriteclick(`"+filme.id+"`,`"+username+"`,`"+rtoken+"`)" style="background:transparent;border: none;")
+                                <a title="Adicionar aos Favourites" style="margin-left:10px;cursor:pointer;">
+                                    if favourite 
+                                        <svg id="fav_marked" transform="translate(0 -5)" xmlns="http://www.w3.org/2000/svg" fill="red" width="42px" height="42px" viewBox="0 0 24 24" id="favourite-alt" class="icon glyph"><path d="M16.5,3A5.38,5.38,0,0,0,12,5.57,5.38,5.38,0,0,0,7.5,3,5.8,5.8,0,0,0,2,9c0,8.75,9.22,12.72,9.61,12.88a1,1,0,0,0,.78,0C12.78,21.76,22,17.79,22,9A5.8,5.8,0,0,0,16.5,3Z"/></svg>
+                                    else 
+                                        <svg id="fav_unmarked" transform="translate(0 -5)" viewBox="0 0 24 24" id="favourite" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color" fill="white" width="42px" height="42px">
+                                            <path id="primary" d="M19.57,5.44a4.91,4.91,0,0,1,0,6.93L12,20,4.43,12.37A4.91,4.91,0,0,1,7.87,4a4.9,4.9,0,0,1,3.44,1.44,4.46,4.46,0,0,1,.69.88,4.46,4.46,0,0,1,.69-.88,4.83,4.83,0,0,1,6.88,0Z" style="fill: none; stroke: white; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                                        </svg>
+                                </a>
+
+                    p(class="titlecartaz" style="font:bold;") #{filme.title} (original: #{filme.original_title} )
+                    p(style="font:bold;") 
+                        strong Géneros
+                    each genre in filme.genres 
+                        div(class="moviegenre" style="font:bold;") #{genre.name}
+                    p(class="resumo") #{filme.overview}
+                    div(class="homebuttons")
+                        button.w3-button.w3-round-xxlarge(id="assistir" style="background-color:#1a2a41" class="gButton")
+                            <a href="#" class="gButton">
+                            <svg width="20px" transform="translate(0 5)" margin-right="10px" height="20px" width="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="white"/>
+                            </svg> Assistir filme</a>
+                        button.w3-button.w3-round-xxlarge(onclick="displayTrailer("+filme.id+")" style="background-color:#1a2a41" class="gButton")
+                            <a style="margin-top:100px;">
+                                <svg style="margin-right:10px;" transform="translate(0 5)" fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5.92 24.096q0 1.088 0.928 1.728 0.512 0.288 1.088 0.288 0.448 0 0.896-0.224l16.16-8.064q0.48-0.256 0.8-0.736t0.288-1.088-0.288-1.056-0.8-0.736l-16.16-8.064q-0.448-0.224-0.896-0.224-0.544 0-1.088 0.288-0.928 0.608-0.928 1.728v16.16z" fill="white"/>
+                            </svg> Trailer</a>
+                        
+                        - var linkm = "https://"
+                        - var movieid = filme.imdb_id
+                        - var urlmovie = linkm.concat('',movieid)
+                    div(id="playerIframe")
+                        div(id="movieplayer" style="padding:30px")
+                            <iframe id="elmovie" src=#{urlmovie} width="500px" height="300px" frameborder="0" allowfullscreen controls hidden></iframe>
+    div(id="itemsList")
+        div(class="itemsListmovies" style="margin-top:220px")
+            div(class="border owl-carousel owl-loaded owl-drag")
+                div(class="owl-stage-outer")
+                    div(class="gTitle" style="margin-left:300px;margin-top:20px;") Gostou do filme #{filme.title}? Consulte os seguintes filmes relacionados.
+                    div(class="grid-container owl-stage" id="recommendations-grid-container")
+                        each movierec in movierecs
+                            <div class="grid-item owl-item active" style="width: auto; ">
+                                a(class="gPoster" title="Assistir:" + movierec.title href="/filmes/" + movierec.id)
+                                    div(class="inner")
+                                        div(class="p")
+                                            img(src="https://image.tmdb.org/t/p/w220_and_h330_face" + movierec.poster_path alt="Assistir: " + movierec.title)
+                                        div(class="i")
+                                            span #{movierec.title} 
+                                            div(class="mi")
+                                                div(class="y") #{movierec.release_date} 
+                                                div(class="r") #{movierec.vote_average} 
+                                                div(class="s")
+                                                    <svg fill="#000000" width="10px" height="10px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffbd0d" d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z"></path></svg>
+                                                div(class="t") #{movierec.popularity}
+                            </div>
+    .modal(id="framedivtrailer" style="background-color:black")
+    div(id="itemsList")
+        div(class="wrap")
+        div
+            <div class="extraData">
+                <div class="wrap">
+                div(class="border owl-carousel owl-loaded owl-drag")
+                    div(class="owl-stage-outer")
+                        <div class="gTitle"><u>Galeria</u></div>
+                        div(class="grid-container-gallery" id="gallery")
+                            each imag in imagens.backdrops
+                                div(class="grid-item owl-item active gPhoto")
+                                    img(style ="height:110px;width:190px;" src="https://image.tmdb.org/t/p/w300"+imag.file_path)
+                </div>
+            </div>
+                
+    <footer class="mainfooter" role="contentinfo">
+        <div class="footer-middle">
+            <div class="wrap" style="text-align:center;">
+                <h2 class="containerfooter">PARCEIROS DO FILMZ</h2>
+                <h4 class="containerfooter">SIGA-NOS NAS REDES SOCIAIS</h4>
+                <a href="https://instagram.com/khonsupx">            
+                    <img src="/images/instagram_icon.png" style="height:52px;width:52px;margin-bottom:10px;"/>
+                </a>
+
+            </div>
+            <div class="containerfooter">© Copyright Todos os direitos reservados João Castro 2024 </div>
+        </div>
+    </footer>

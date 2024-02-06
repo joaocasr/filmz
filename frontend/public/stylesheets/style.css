@@ -500,3 +500,34 @@ footer {
   height: calc(100% - 20px);
   overflow: hidden;
 }
+
+.alert {
+  background-color: #f44336;
+  color: white;
+  max-width:500px;
+  height:50px;
+  text-align: center;
+  padding-block: 10px;
+  font-family: "Lucida Console", "Courier New", monospace;
+  transition: opacity 0.6s;
+  border-radius: 20px;
+}
+
+.alert.success {background-color: #04AA6D;}
+.alert.invisible {display:none;}
+
+.closebtn {
+  margin-right: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+

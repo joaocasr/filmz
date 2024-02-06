@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start:all": "concurrently \"npm start --prefix API\" \"npm start --prefix INTERFACE\""
+    "start:all": "concurrently \"npm start --prefix backend\" \"npm start --prefix frontend\""
   },
   "author": "João Castro",
   "license": "ISC"

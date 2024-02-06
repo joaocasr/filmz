@@ -61,6 +61,7 @@ function watchlistclick(movieid,account_id,token){
     console.log("next value: "+newwatchlist);
     $('#watchlistbtn').data('button', {"mwatchlist":newwatchlist});
 
+    
     $.ajax({
         type:"POST",
         url:"http://localhost:7777/account/"+account_id+"/watchlist/"+token,
@@ -72,15 +73,16 @@ function watchlistclick(movieid,account_id,token){
         statusCode:{
             404: function (response) {
                 console.log("error :"+response);
-            }/*,
-            200: function (response) {
-                console.log("success :olarilole");
-            }*/
+                $("#pop1").removeClass('invisible');
+            }
         }, success: function () {
             console.log("success");
+            $("#pop2").removeClass('invisible');
         },
         dataType: 'json'
     });
+    
+    
 }
 
 function favouriteclick(id,username,token){
@@ -104,5 +106,17 @@ function favouriteclick(id,username,token){
     }
     console.log("next value: "+newisliked);
     $('#favouritebtn').data('button', {"mfavourite":newisliked});
-
 }
+
+$(function(){
+    var close1 = $("#pop1").find('span')
+    var close2 = $("#pop2").find('span')
+    close1.on("click",function(){
+        console.log("clicked close button.");
+        $("#pop1").fadeOut("slow");
+    })
+    close2.on("click",function(){
+        console.log("clicked close button.");
+        $("#pop2").fadeOut("slow");
+    })
+})

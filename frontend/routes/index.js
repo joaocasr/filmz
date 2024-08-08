@@ -26,16 +26,18 @@ router.get('/token', function(req, res, next) {
   if(req.cookies.access_token!=null){
     token = req.cookies.access_token
     exists=true
+    console.log("TOKEN:") 
+    console.log(token) 
     current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
     expiration = new Date(current_token.expires_at).getTime()- 3600000
-    now = new Date().getTime()  
+    now = new Date().getTime() 
     console.log(current_token)
     console.log("ahora:"+now)
     console.log("exp:"+expiration)
   }
   if(exists && now<expiration && now-current_token.timestamp<900000){
     res.clearCookie("access_token");
-    res.redirect("https://www.themoviedb.org/authenticate/"+current_token.request_token+"?redirect_to=http://localhost:7778/");
+    res.redirect("https://www.themoviedb.org/authenticate/"+current_token.request_token+"?redirect_to="+ap.app_accesspoint);
     res.end();
   }else{
     res.redirect('/auth/request_token');
@@ -54,7 +56,7 @@ router.get('/auth/request_token',function(req,res,next){
       res.cookie("access_token", token, {
         httpOnly: true
       })
-      res.redirect("https://www.themoviedb.org/authenticate/"+resp.data.request_token+"?redirect_to=http://localhost:7778/")
+      res.redirect("https://www.themoviedb.org/authenticate/"+resp.data.request_token+"?redirect_to="+app.app_accesspoint)
   
     }).catch(err =>{
       res.render('error',{error:err})
@@ -77,7 +79,11 @@ router.post('/search',function(req,res,next){
 })
 
 router.get('/filmes/:idmovie', function(req,res,next){
-  var token = req.cookies.access_token;
+  let token = req.cookies;
+  if(token!=null) token = token.access_token;
+  if(token==null){
+    res.redirect('/token')
+  }
   var current_token = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
   axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie).then(resp =>{
     axios.get(ap.api_accesspoint+"/movie/"+req.params.idmovie+"/images").then(images =>{

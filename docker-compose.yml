@@ -1,0 +1,45 @@
+version: "3"
+services:
+  frontendservice:
+    build: ./frontend
+    container_name: frontend-container
+    restart: always
+    ports: 
+      - '7778:7778'
+    environment:
+      - API_URL=http://backendservice:7777
+      - APP_URL=http://frontendservice:7778
+    depends_on:
+      - backendservice
+    networks:
+      - filmz
+
+  backendservice:
+    container_name: backend-container
+    build: ./backend
+    restart: always
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017/filmz
+    ports:
+      - "7777:7777"
+    depends_on:
+      - mongodb
+    networks:
+      - filmz
+
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - FilmzData:/data/db
+    networks:
+      - filmz
+
+networks:
+  filmz:
+    name: filmz
+    driver: bridge
+volumes:
+  FilmzData:

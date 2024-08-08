@@ -6,7 +6,8 @@ var logger = require('morgan');
 const mongoose = require("mongoose");
 var cors = require('cors')
 
-const mongoDB = "mongodb://127.0.0.1/filmz";
+//const mongoDB = "mongodb://127.0.0.1/filmz";
+const mongoDB = process.env.MONGODB_URL;
 mongoose.connect(mongoDB)
 
 var db = mongoose.connection;

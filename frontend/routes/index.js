@@ -37,7 +37,7 @@ router.get('/token', function(req, res, next) {
   }
   if(exists && now<expiration && now-current_token.timestamp<900000){
     res.clearCookie("access_token");
-    res.redirect("https://www.themoviedb.org/authenticate/"+current_token.request_token+"?redirect_to="+ap.app_accesspoint);
+    res.redirect("https://www.themoviedb.org/authenticate/"+current_token.request_token+"?redirect_to=http://localhost:7778/");
     res.end();
   }else{
     res.redirect('/auth/request_token');
@@ -56,7 +56,7 @@ router.get('/auth/request_token',function(req,res,next){
       res.cookie("access_token", token, {
         httpOnly: true
       })
-      res.redirect("https://www.themoviedb.org/authenticate/"+resp.data.request_token+"?redirect_to="+app.app_accesspoint)
+      res.redirect("https://www.themoviedb.org/authenticate/"+resp.data.request_token+"?redirect_to=http://localhost:7778/")
   
     }).catch(err =>{
       res.render('error',{error:err})

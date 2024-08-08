@@ -1,5 +1,10 @@
 # filmz
 
+### Run Web Aplication with multiple containers for each service
+```
+sudo docker-compose up --build
+```
+
 getting data from TMDB api - using express framework for API
 
 interface using pug
